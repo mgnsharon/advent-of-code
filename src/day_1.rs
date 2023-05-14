@@ -1,51 +1,49 @@
+fn parse_elves(s: &str) -> Vec<u32> {
+    s.split("\n\n").map(get_elf_total).collect()
+}
+
+fn get_elf_total(s: &str) -> u32 {
+    s.lines().map(|c| c.parse::<u32>().unwrap()).sum()
+}
+
 pub fn day_1a(s: &str) -> String {
-    let s: u32 = s
-        .split("\n\n")
-        .map(|vals| vals.lines().map(|c| c.parse::<u32>().unwrap()).sum())
-        .max()
-        .unwrap();
-    format!("{}", s)
+    parse_elves(s).iter().max().unwrap().to_string()
 }
 
 pub fn day_1b(s: &str) -> String {
-    let mut elves: Vec<u32> = s
-        .split("\n\n")
-        .map(|vals| vals.lines().map(|c| c.parse::<u32>().unwrap()).sum())
-        .collect();
+    let mut elves = parse_elves(s);
 
     elves.sort_by(|a, b| b.cmp(a));
-    let s = elves.iter().take(3).sum::<u32>();
-    format!("{}", s)
+    elves.iter().take(3).sum::<u32>().to_string()
 }
 
 #[cfg(test)]
 mod tests {
-    use std::cmp::Ordering;
 
     use super::*;
 
     #[test]
     fn test_day_1a() {
         let s = day_1a(SHORT_INPUT);
-        assert!(s[..].cmp("24000") == Ordering::Equal)
+        assert_eq!(s, "24000");
     }
     #[test]
     fn test_day_1a_long() {
         let s = day_1a(LONG_INPUT);
-        assert!(s[..].cmp("71023") == Ordering::Equal)
+        assert_eq!(s, "71023");
     }
 
     #[test]
     fn test_day_1b() {
         let s = day_1b(SHORT_INPUT);
-        assert!(s[..].cmp("45000") == Ordering::Equal)
+        assert_eq!(s, "45000");
     }
 
     #[test]
     fn test_day_1b_long() {
         let s = day_1b(LONG_INPUT);
         println!("{}", s);
-        assert!(s[..].cmp("206289") == Ordering::Equal)
+        assert_eq!(s, "206289");
     }
 
     const SHORT_INPUT: &str = "1000
