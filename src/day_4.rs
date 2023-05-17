@@ -1,37 +1,55 @@
-fn get_sections(s: &str) -> (Vec<usize>, Vec<usize>) {
-    let sections = s.split(',').collect::<Vec<&str>>();
-    let m1 = sections[0]
-        .split('-')
-        .map(|n| n.parse::<usize>().unwrap())
-        .collect::<Vec<usize>>();
-    let m2 = sections[1]
-        .split('-')
-        .map(|n| n.parse::<usize>().unwrap())
-        .collect::<Vec<usize>>();
-
-    (m1, m2)
+use std::str::FromStr;
+#[derive(Clone, Copy, Debug)]
+struct Assignment {
+    start: u32,
+    end: u32,
 }
 
-fn overlaps(s: &str) -> bool {
-    let (m1, m2) = get_sections(s);
-    m1[0] <= m2[1] && m2[0] <= m1[1]
+impl FromStr for Assignment {
+    type Err = String;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let bounds = s
+            .split('-')
+            .map(|n| n.parse::<u32>().unwrap())
+            .collect::<Vec<u32>>();
+        Ok(Self {
+            start: bounds[0],
+            end: bounds[1],
+        })
+    }
 }
 
-fn fully_contains(s: &str) -> bool {
-    let (m1, m2) = get_sections(s);
-    (m1[0] <= m2[0] && m1[1] >= m2[1]) || (m2[0] <= m1[0] && m2[1] >= m1[1])
+impl Assignment {
+    pub fn contains(&self, other: &Self) -> bool {
+        self.start <= other.start && self.end >= other.end
+    }
+
+    pub fn overlaps(&self, other: &Self) -> bool {
+        self.start <= other.end && other.start <= self.end
+    }
+}
+
+fn parse_assignments(s: &str) -> (Assignment, Assignment) {
+    let assignments: Vec<Assignment> = s
+        .split(',')
+        .map(|a| Assignment::from_str(a).unwrap())
+        .collect();
+
+    (assignments[0], assignments[1])
 }
 
 pub fn day_4a(s: &str) -> String {
     s.lines()
-        .filter(|sections| fully_contains(sections))
+        .map(parse_assignments)
+        .filter(|(a, b)| a.contains(b) | b.contains(a))
         .count()
         .to_string()
 }
 
 pub fn day_4b(s: &str) -> String {
     s.lines()
-        .filter(|sections| overlaps(sections))
+        .map(parse_assignments)
+        .filter(|(a, b)| a.overlaps(b))
         .count()
         .to_string()
 }
