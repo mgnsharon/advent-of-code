@@ -2,7 +2,7 @@ use nom::{
     branch::alt,
     bytes::complete::tag,
     character::{
-        complete::{self, alpha1, digit1, multispace1, newline, u8},
+        complete::{self, alpha1, digit1, multispace1, newline, u32},
         streaming::space1,
     },
     multi::{many1, separated_list1},
@@ -52,12 +52,19 @@ fn parse_crates(input: &str) -> IResult<&str, Vec<Stack>> {
 
 fn parse_move(input: &str) -> IResult<&str, Move> {
     let (input, _) = tag("move ")(input)?;
-    let (input, qty) = u8(input)?;
+    let (input, qty) = u32(input)?;
     let (input, _) = tag(" from ")(input)?;
-    let (input, src) = u8(input)?;
+    let (input, src) = u32(input)?;
     let (input, _) = tag(" to ")(input)?;
-    let (input, dst) = u8(input)?;
-    Ok((input, Move { qty, src, dst }))
+    let (input, dst) = u32(input)?;
+    Ok((
+        input,
+        Move {
+            qty: qty.to_usize(),
+            src: src.to_usize(),
+            dst: dst.to_usize(),
+        },
+    ))
 }
 
 fn parse_moves(input: &str) -> IResult<&str, Vec<Move>> {
@@ -88,42 +95,40 @@ impl Stack {
 
 #[derive(Debug, Clone)]
 struct Move {
-    qty: u8,
-    src: u8,
-    dst: u8,
+    qty: usize,
+    src: usize,
+    dst: usize,
 }
 
 fn parse_input(input: &str) -> String {
     let (input, mut stacks) = parse_crates(input).unwrap();
-    let (input, moves) = parse_moves(input).unwrap();
+    let (_, moves) = parse_moves(input).unwrap();
     moves.iter().for_each(|m| {
-        let src_idx = m.src.to_usize() - 1;
-        let dst_idx = m.dst.to_usize() - 1;
+        let src_idx = m.src - 1;
+        let dst_idx = m.dst - 1;
         if let Ok([src, dst]) = stacks.get_many_mut([src_idx, dst_idx]) {
-            src.move_to(dst, m.qty.to_usize());
+            src.move_to(dst, m.qty);
         }
     });
 
-    stacks.iter().fold("".to_string(), |s, stack| {
-        if let Some(c) = stack.crates.first() {
-            format!("{s}{c}")
-        } else {
-            s
-        }
-    })
+    get_top_crates(&stacks)
 }
 
 fn parse_input_multi(input: &str) -> String {
     let (input, mut stacks) = parse_crates(input).unwrap();
-    let (input, moves) = parse_moves(input).unwrap();
+    let (_, moves) = parse_moves(input).unwrap();
     moves.iter().for_each(|m| {
-        let src_idx = m.src.to_usize() - 1;
-        let dst_idx = m.dst.to_usize() - 1;
+        let src_idx = m.src - 1;
+        let dst_idx = m.dst - 1;
         if let Ok([src, dst]) = stacks.get_many_mut([src_idx, dst_idx]) {
-            src.move_multiple_to(dst, m.qty.to_usize());
+            src.move_multiple_to(dst, m.qty);
         }
     });
 
+    get_top_crates(&stacks)
+}
+
+fn get_top_crates(stacks: &Vec<Stack>) -> String {
     stacks.iter().fold("".to_string(), |s, stack| {
         if let Some(c) = stack.crates.first() {
             format!("{s}{c}")
