@@ -11,24 +11,20 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_day_xa() {
-        let s = day_xa(SHORT_INPUT);
-        assert_eq!(s, "");
+    fn test_day_xa_short() {
+        assert_eq!(day_xa(SHORT_INPUT), "");
     }
     #[test]
     fn test_day_xa_long() {
-        let s = day_xa(LONG_INPUT);
-        assert_eq!(s, "");
+        assert_eq!(day_xa(LONG_INPUT), "");
     }
     #[test]
-    fn test_day_xb() {
-        let s = day_xb(SHORT_INPUT);
-        assert_eq!(s, "");
+    fn test_day_xb_short() {
+        assert_eq!(day_xb(SHORT_INPUT), "");
     }
     #[test]
     fn test_day_xb_long() {
-        let s = day_xb(LONG_INPUT);
-        assert_eq!(s, "");
+        assert_eq!(day_xb(LONG_INPUT), "");
     }
 
     const SHORT_INPUT: &str = "";
