@@ -143,7 +143,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_day_7a() {
+    fn test_day_7a_short() {
         assert_eq!(day_7a(SHORT_INPUT), "95437".to_string());
     }
     #[test]
@@ -151,7 +151,7 @@ mod tests {
         assert_eq!(day_7a(LONG_INPUT), "1583951");
     }
     #[test]
-    fn test_day_7b() {
+    fn test_day_7b_short() {
         assert_eq!(day_7b(SHORT_INPUT), "24933642");
     }
     #[test]
