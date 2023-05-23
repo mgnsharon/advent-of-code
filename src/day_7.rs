@@ -110,7 +110,7 @@ fn get_sizes(input: &str) -> BTreeMap<Vec<String>, u32> {
     commands.iter().fold((vec![], BTreeMap::new()), calc_size).1
 }
 
-pub fn day_xa(s: &str) -> String {
+pub fn day_7a(s: &str) -> String {
     get_sizes(s)
         .iter()
         .filter(|(_, &size)| size < 100_000)
@@ -119,7 +119,7 @@ pub fn day_xa(s: &str) -> String {
         .to_string()
 }
 
-pub fn day_xb(input: &str) -> String {
+pub fn day_7b(input: &str) -> String {
     let sizes = get_sizes(input);
     let total_size = 70_000_000;
     let needed_space = 30_000_000;
@@ -143,20 +143,20 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_day_xa() {
-        assert_eq!(day_xa(SHORT_INPUT), "95437".to_string());
+    fn test_day_7a() {
+        assert_eq!(day_7a(SHORT_INPUT), "95437".to_string());
     }
     #[test]
-    fn test_day_xa_long() {
-        assert_eq!(day_xa(LONG_INPUT), "1583951");
+    fn test_day_7a_long() {
+        assert_eq!(day_7a(LONG_INPUT), "1583951");
     }
     #[test]
-    fn test_day_xb() {
-        assert_eq!(day_xb(SHORT_INPUT), "24933642");
+    fn test_day_7b() {
+        assert_eq!(day_7b(SHORT_INPUT), "24933642");
     }
     #[test]
-    fn test_day_xb_long() {
-        assert_eq!(day_xb(LONG_INPUT), "214171");
+    fn test_day_7b_long() {
+        assert_eq!(day_7b(LONG_INPUT), "214171");
     }
 
     const SHORT_INPUT: &str = "$ cd /
