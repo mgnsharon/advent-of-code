@@ -25,19 +25,13 @@ enum Cd {
 
 #[derive(Debug)]
 enum Files {
-    File { size: u32, name: String },
+    File { size: u32 },
     Dir(String),
 }
 
 fn parse_file(input: &str) -> IResult<&str, Files> {
-    let (input, (size, name)) = parse_file_listing(input)?;
-    Ok((
-        input,
-        Files::File {
-            size,
-            name: name.to_string(),
-        },
-    ))
+    let (input, (size, _name)) = parse_file_listing(input)?;
+    Ok((input, Files::File { size }))
 }
 
 fn parse_dir(input: &str) -> IResult<&str, Files> {
