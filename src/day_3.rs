@@ -18,13 +18,7 @@ fn process_rucksack(s: &str) -> char {
 fn find_badge(sacks: [&str; 3]) -> char {
     let [fir, sec, thr] = sacks;
     fir.chars()
-        .find_map(|c| {
-            if sec.contains(c) && thr.contains(c) {
-                Some(c)
-            } else {
-                None
-            }
-        })
+        .find(|c| sec.contains(*c) && thr.contains(*c))
         .unwrap()
 }
 
@@ -47,7 +41,7 @@ pub fn day_3b(s: &str) -> String {
         .map(|group| {
             let badge = find_badge(group);
             let priority = priorities.get(&badge).unwrap();
-            *priority as usize
+            *priority
         })
         .sum::<usize>()
         .to_string()

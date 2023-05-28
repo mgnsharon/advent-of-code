@@ -5,7 +5,7 @@ fn build_forrest(input: &str) -> Vec<Vec<u32>> {
         .collect::<Vec<Vec<u32>>>()
 }
 
-fn get_columns(forrest: &Vec<Vec<u32>>) -> Vec<Vec<u32>> {
+fn get_columns(forrest: &[Vec<u32>]) -> Vec<Vec<u32>> {
     let mut columns: Vec<Vec<u32>> = vec![];
     for x in 0..forrest[0].len() {
         let col = forrest.iter().map(|row| row[x]).collect::<Vec<u32>>();
@@ -19,8 +19,8 @@ fn get_views(rows: Vec<Vec<u32>>, columns: Vec<Vec<u32>>) -> Vec<ScenicView> {
     let col_count = columns.len();
     let row_count = rows.len();
     let mut views: Vec<ScenicView> = vec![];
-    for idx in 1..row_count - 1 {
-        for idx_col in 1..col_count - 1 {
+    for (idx, _) in rows.iter().enumerate().take(row_count - 1).skip(1) {
+        for (idx_col, _) in columns.iter().enumerate().take(col_count - 1).skip(1) {
             let pivot = rows[idx][idx_col];
             let mut north = columns[idx_col][0..idx].to_vec();
             north.reverse();
@@ -51,10 +51,10 @@ fn get_viewing_distance(p: &u32, trees: &Vec<u32>) -> u32 {
 }
 
 fn calc_scenic_score((pivot, north, south, east, west): &ScenicView) -> u32 {
-    let north_score = get_viewing_distance(&pivot, &north);
-    let south_score = get_viewing_distance(&pivot, &south);
-    let east_score = get_viewing_distance(&pivot, &east);
-    let west_score = get_viewing_distance(&pivot, &west);
+    let north_score = get_viewing_distance(pivot, north);
+    let south_score = get_viewing_distance(pivot, south);
+    let east_score = get_viewing_distance(pivot, east);
+    let west_score = get_viewing_distance(pivot, west);
 
     let score = north_score * south_score * east_score * west_score;
     if score == 2_298_582 {

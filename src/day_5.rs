@@ -128,7 +128,7 @@ fn parse_input_multi(input: &str) -> String {
     get_top_crates(&stacks)
 }
 
-fn get_top_crates(stacks: &Vec<Stack>) -> String {
+fn get_top_crates(stacks: &[Stack]) -> String {
     stacks.iter().fold("".to_string(), |s, stack| {
         if let Some(c) = stack.crates.first() {
             format!("{s}{c}")

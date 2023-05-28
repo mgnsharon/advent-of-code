@@ -25,7 +25,7 @@ impl HandShape {
                 HandShape::Paper => Ok(HandShape::Scissors),
                 HandShape::Scissors => Ok(HandShape::Rock),
             },
-            _ => return Err("Invalid Outcome".to_string()),
+            _ => Err("Invalid Outcome".to_string()),
         }
     }
 }
@@ -72,7 +72,7 @@ enum RoundOutcome {
 
 fn calc_round_score(s: &str) -> u32 {
     let hands: Vec<HandShape> = s
-        .split(" ")
+        .split(' ')
         .map(|h| h.parse::<HandShape>().unwrap())
         .collect();
     let opp_hand = hands.get(0).unwrap();
@@ -86,7 +86,7 @@ fn calc_round_score(s: &str) -> u32 {
 }
 
 fn calc_modified_score(s: &str) -> u32 {
-    let mut item_iter = s.split(" ").into_iter();
+    let mut item_iter = s.split(' ');
     let opp_hand = HandShape::from_str(item_iter.next().unwrap()).unwrap();
     let own_hand = HandShape::from_outcome(&opp_hand, item_iter.next().unwrap()).unwrap();
 

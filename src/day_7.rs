@@ -129,7 +129,7 @@ pub fn day_7b(input: &str) -> String {
         .collect::<Vec<&u32>>();
 
     valid_dirs.sort();
-    valid_dirs.iter().next().unwrap().to_string()
+    valid_dirs.first().unwrap().to_string()
 }
 
 #[cfg(test)]
