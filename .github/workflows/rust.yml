@@ -30,6 +30,7 @@ jobs:
     - name: Clippy
       uses: actions-rs/cargo@v1
       with:
+        toolchain: nightly
         command: clippy
     - name: Audit
       run: cargo audit
