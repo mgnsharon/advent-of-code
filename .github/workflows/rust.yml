@@ -21,7 +21,15 @@ jobs:
       with:
         toolchain: nightly
         override: true
+    - name: Install cargo-audit
+      run: cargo install cargo-audit
     - name: Test
       uses: actions-rs/cargo@v1
       with:
         command: test
+    - name: Clippy
+      uses: actions-rs/cargo@v1
+      with:
+        command: clippy
+    - name: Audit
+      run: cargo audit
