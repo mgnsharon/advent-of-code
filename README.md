@@ -1,2 +1,2 @@
 # advent-of-code
-Advent of Code 2022 with Rust
+Advent of Code 2022 Using Rust
