@@ -3,7 +3,14 @@
 version = 3
 
 [[package]]
-name = "advent-of-code"
+name = "aoc-2022"
+version = "0.1.0"
+dependencies = [
+ "nom",
+]
+
+[[package]]
+name = "aoc-2023"
 version = "0.1.0"
 dependencies = [
  "nom",
@@ -11,9 +18,9 @@ dependencies = [
 
 [[package]]
 name = "memchr"
-version = "2.5.0"
+version = "2.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
+checksum = "f665ee40bc4a3c5590afb1e9677db74a508659dfd71e126420da8274909a0167"
 
 [[package]]
 name = "minimal-lexical"
