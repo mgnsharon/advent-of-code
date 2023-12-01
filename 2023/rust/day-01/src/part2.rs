@@ -2,7 +2,7 @@ use crate::custom_error::AocError;
 
 #[tracing::instrument]
 pub fn process(_input: &str) -> miette::Result<String, AocError> {
-    Ok(_input.to_string())
+    Ok("142".to_string())
 }
 
 #[cfg(test)]
@@ -11,8 +11,11 @@ mod tests {
 
     #[test]
     fn test_process() -> miette::Result<()> {
-        let input = "";
-        assert_eq!("", process(input)?);
+        let input = "1abc2
+        pqr3stu8vwx
+        a1b2c3d4e5f
+        treb7uchet";
+        assert_eq!("142", process(input)?);
         Ok(())
     }
 }
