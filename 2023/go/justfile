@@ -1,0 +1,12 @@
+set dotenv-load
+bindir := "bin"
+srcdir := "src"
+
+build day:
+    go build -o {{bindir}}/{{day}} ./{{srcdir}}/{{day}}
+
+test day:
+    go test ./{{srcdir}}/{{day}}
+
+run day:
+    go run ./{{srcdir}}/{{day}}

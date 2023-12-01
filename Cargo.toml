@@ -1,7 +1,0 @@
-[workspace]
-resolver = "2"
-members = [
-    "2022/rust",
-    "2023/rust"
-]
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
