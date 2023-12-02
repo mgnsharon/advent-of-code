@@ -1,2 +1,5 @@
-# advent-of-code
-Advent of Code 2022 Using Rust
+# Advent of Code
+
+Solutions for the [Advent of Code](http://adventofcode.com/)
+
+Answers are organized by year / language / day
