@@ -1,28 +1,37 @@
 use crate::custom_error::AocError;
 
 #[tracing::instrument]
-fn get_first_digit(input: &str) -> miette::Result<char, &str> {
-    input.chars().find(|c| c.is_numeric()).ok_or("")
+fn process_line(input: &str) -> u64 {
+    let mut it = input.chars().filter_map(|c| c.to_digit(10));
+
+    let first = it.next().expect("should be a number");
+
+    match it.last() {
+        Some(n) => format!("{first}{n}"),
+        None => format!("{first}{first}"),
+    }
+    .parse::<u64>()
+    .expect("should be a valid number")
 }
 
 #[tracing::instrument]
 pub fn process(input: &str) -> miette::Result<String, AocError> {
-    let output: u64 = input
-        .lines()
-        .map(|line| {
-            let first = get_first_digit(line).unwrap();
-            let last = get_first_digit(line.chars().rev().collect::<String>().as_str()).unwrap();
-
-            format!("{}{}", first, last).parse::<u64>().unwrap()
-        })
-        .sum();
-    Ok(output.to_string())
+    Ok(input.lines().map(process_line).sum::<u64>().to_string())
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use rstest::rstest;
 
+    #[rstest]
+    #[case("1abc2", 12)]
+    #[case("pqr3stu8vwx", 38)]
+    #[case("a1b2c3d4e5f", 15)]
+    #[case("treb7uchet", 77)]
+    fn line_test(#[case] line: &str, #[case] expected: u64) {
+        assert_eq!(expected, process_line(line))
+    }
     #[test]
     fn test_process() -> miette::Result<()> {
         let input = "1abc2
