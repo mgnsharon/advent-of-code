@@ -24,9 +24,9 @@ func TestProcessPart1(t *testing.T) {
 	assert.Equal(t, "142", processPart1(testData))
 }
 
-func TestGetDigits(t *testing.T) {
+func TestProcessLine(t *testing.T) {
 	var expected int64 = 84
-	assert.Equal(t, getDigits("nqninenmvnpsz874"), expected)
+	assert.Equal(t, processLine("nqninenmvnpsz874"), expected)
 }
 
 func TestProcessPart2(t *testing.T) {
