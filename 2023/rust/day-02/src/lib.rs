@@ -41,9 +41,5 @@ impl<'a> Game<'a> {
             })
             .values()
             .product()
-
-        // min_cubes.get("red").expect("red should be set")
-        //     * min_cubes.get("green").expect("green should be set")
-        //     * min_cubes.get("blue").expect("blue should be set")
     }
 }
