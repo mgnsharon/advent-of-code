@@ -29,18 +29,21 @@ impl<'a> Game<'a> {
     }
 
     fn min_cube_power(&self) -> u32 {
-        let mut min_cubes = BTreeMap::from([("red", 0u32), ("green", 0u32), ("blue", 0u32)]);
+        let min_cubes = BTreeMap::from([("red", 0u32), ("green", 0u32), ("blue", 0u32)]);
 
-        self.rounds.iter().for_each(|r| {
-            r.iter().for_each(|c| {
-                if c.amt > *min_cubes.get(c.color).expect("cube should exist") {
-                    min_cubes.entry(c.color).and_modify(|v| *v = c.amt);
-                }
+        self.rounds
+            .iter()
+            .fold(min_cubes, |mut acc, r| {
+                r.iter().for_each(|c| {
+                    acc.entry(c.color).and_modify(|v| *v = (*v).max(c.amt));
+                });
+                acc
             })
-        });
+            .values()
+            .product()
 
-        min_cubes.get("red").expect("red should be set")
-            * min_cubes.get("green").expect("green should be set")
-            * min_cubes.get("blue").expect("blue should be set")
+        // min_cubes.get("red").expect("red should be set")
+        //     * min_cubes.get("green").expect("green should be set")
+        //     * min_cubes.get("blue").expect("blue should be set")
     }
 }
